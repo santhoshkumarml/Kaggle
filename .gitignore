@@ -7,6 +7,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.metadata/
 env/
 build/
 develop-eggs/
@@ -20,6 +21,8 @@ sdist/
 var/
 *.egg-info/
 .installed.cfg
+.pydevproject
+.project
 *.egg
 
 # PyInstaller
