@@ -67,5 +67,4 @@ for col in list(train_data.columns.values):
         # fig, ax = plt.subplots()
         # train_data[col].hist(ax)
         # plt.show()
-# fig, ax = plt.subplots()
 
