@@ -3,6 +3,10 @@ from utils import data_helper
 
 train_data, train_data_target, test_data, cols = data_helper.read_data()
 
+cols = list(test_data.columns.values)
+cols.remove('PassengerId')
+cols.remove('Name')
+
 train_data['Sex'] = [1 if row=='male' else 0 for row in train_data['Sex']]
 test_data['Sex'] = [1 if row=='male' else 0 for row in test_data['Sex']]
 

@@ -7,10 +7,7 @@ def read_data():
     train_data_target = train_data['Survived']
     train_data = train_data.drop('Survived', axis=1)
     test_data = pandas.read_csv('../test.csv')
-    cols = list(test_data.columns.values)
-    cols.remove('PassengerId')
-    cols.remove('Name')
-    return train_data, train_data_target, test_data, cols
+    return train_data, train_data_target, test_data
 
 def write_data(test_data, out_file, output):
     cols = list(test_data.columns.values)

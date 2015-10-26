@@ -1,18 +1,71 @@
 __author__ = 'santhosh'
 
-import pandas
 from utils import data_helper
 import matplotlib.pyplot as plt
+import numpy as np
 
-train_data, train_data_target, test_data, cols = data_helper.read_data()
+train_data, train_data_target, test_data = data_helper.read_data()
 
-for col in cols:
+
+train_data['Sex'] = [1 if row=='male' else 0 for row in train_data['Sex']]
+
+train_data['Parch0'] = [1 if row==0 else 0 for row in train_data['Parch']]
+train_data['Parch1'] = [1 if row==1 else 0 for row in train_data['Parch']]
+train_data['Parch2'] = [1 if row==2 else 0 for row in train_data['Parch']]
+train_data['Parch3'] = [1 if row==3 else 0 for row in train_data['Parch']]
+train_data['Parch4'] = [1 if row==4 else 0 for row in train_data['Parch']]
+train_data['Parch5'] = [1 if row==5 else 0 for row in train_data['Parch']]
+train_data['Parch8'] = [1 if row==8 else 0 for row in train_data['Parch']]
+
+
+train_data['SibSp0'] = [1 if row==0 else 0 for row in train_data['SibSp']]
+train_data['SibSp1'] = [1 if row==1 else 0 for row in train_data['SibSp']]
+train_data['SibSp2'] = [1 if row==2 else 0 for row in train_data['SibSp']]
+train_data['SibSp3'] = [1 if row==3 else 0 for row in train_data['SibSp']]
+train_data['SibSp4'] = [1 if row==4 else 0 for row in train_data['SibSp']]
+train_data['SibSp5'] = [1 if row==5 else 0 for row in train_data['SibSp']]
+train_data['SibSp6'] = [1 if row==6 else 0 for row in train_data['SibSp']]
+
+
+train_data['EmbarkedQ'] = [1 if row=='Q' else 0 for row in train_data['Embarked']]
+train_data['EmbarkedS'] = [1 if row=='S' else 0 for row in train_data['Embarked']]
+train_data['EmbarkedC'] = [1 if row=='C' else 0 for row in train_data['Embarked']]
+
+
+train_data.drop(['Ticket'], axis=1)
+train_data.drop(['Cabin'], axis=1)
+train_data.drop(['Name'], axis=1)
+train_data.drop(['PassengerId'], axis=1)
+train_data.drop(['Parch'], axis=1)
+train_data.drop(['SibSp'], axis=1)
+train_data.drop(['Embarked'], axis=1)
+
+print list(train_data.columns.values)
+
+def print_pos_neg(col):
+    print '----------------------------------------'
     print col
     data = train_data[col]
-    print data[0]
-    print(len(data))
-    # if len(data) > 0:
-    #     plt.title(col)
-    #     plt.hist(data, bins=10)
-    #     plt.show()
+    positive_samples = []
+    negative_samples = []
+    for i in range(len(data)):
+        if train_data_target[i] == 1:
+            positive_samples.append(data[i])
+        else:
+            negative_samples.append(data[i])
+    print 'positive_1', positive_samples.count(1)
+    print 'positive_0', positive_samples.count(0)
+    print 'negative_1', negative_samples.count(1)
+    print 'negative_0', negative_samples.count(0)
+    print '----------------------------------------'
+
+for col in list(train_data.columns.values):
+    if col not in ['Age', 'Pclass', 'Fare']:
+        print_pos_neg(col)
+    else:
+        pass
+        # fig, ax = plt.subplots()
+        # train_data[col].hist(ax)
+        # plt.show()
+# fig, ax = plt.subplots()
 
