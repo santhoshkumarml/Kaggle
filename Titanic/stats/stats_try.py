@@ -32,13 +32,9 @@ train_data['EmbarkedS'] = [1 if row=='S' else 0 for row in train_data['Embarked'
 train_data['EmbarkedC'] = [1 if row=='C' else 0 for row in train_data['Embarked']]
 
 
-train_data.drop(['Ticket'], axis=1)
-train_data.drop(['Cabin'], axis=1)
-train_data.drop(['Name'], axis=1)
-train_data.drop(['PassengerId'], axis=1)
-train_data.drop(['Parch'], axis=1)
-train_data.drop(['SibSp'], axis=1)
-train_data.drop(['Embarked'], axis=1)
+drop_cols = ['Name', 'PassengerId', 'Cabin', 'Ticket', 'Parch', 'SibSp', 'Embarked']
+
+train_data = train_data.drop(drop_cols, axis=1)
 
 print list(train_data.columns.values)
 
@@ -63,8 +59,8 @@ for col in list(train_data.columns.values):
     if col not in ['Age', 'Pclass', 'Fare']:
         print_pos_neg(col)
     else:
-        pass
-        # fig, ax = plt.subplots()
-        # train_data[col].hist(ax)
-        # plt.show()
+        data = train_data[col]
+        fig, ax = plt.subplots(1, 1)
+        data.hist(ax)
+        plt.show()
 
