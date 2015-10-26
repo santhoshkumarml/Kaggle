@@ -30,9 +30,7 @@ def format_data():
     return train_data, train_data_target
 
 
-def print_binary_pos_neg(col):
-    print '----------------------------------------'
-    print col
+def bar_binary_pos_neg(label):
     data = train_data[col]
     positive_samples = []
     negative_samples = []
@@ -41,28 +39,47 @@ def print_binary_pos_neg(col):
             positive_samples.append(data[i])
         else:
             negative_samples.append(data[i])
-    print 'positive_1', positive_samples.count(1)
-    print 'positive_0', positive_samples.count(0)
-    print 'negative_1', negative_samples.count(1)
-    print 'negative_0', negative_samples.count(0)
-    print '----------------------------------------'
 
-def plotHist(data, label):
+    index = np.arange(0, 2, 1)
+    bar_width = 0.35
+
+    fig = plt.figure()
     plt.title(label)
-    plt.hist(data)
+    rects1 = plt.bar(index,[positive_samples.count(0), positive_samples.count(1)], bar_width,
+                 color='b',
+                 label='Positive Samples')
+
+    rects2 = plt.bar(index + bar_width, [negative_samples.count(0), negative_samples.count(1)], bar_width,
+                 color='r',
+                 label='NegativeSamples')
+
+    plt.xlabel('Binary Label')
+    plt.ylabel('Count')
+    plt.xticks(index + bar_width)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def plotHist(pos_data, neg_data, label):
+    fig = plt.figure()
+    plt.title(label)
+    ax1 = plt.subplot(2, 1, 1)
+    ax2 = plt.subplot(2, 1, 2)
+    ax1.hist(pos_data)
+    ax2.hist(neg_data)
     plt.show()
 
 def hist_continuous_pos_neg(col):
     data = train_data[col]
     pos_data = [data[i] for i in range(len(data))if data[i] >=0 and train_data_target[i] == 1]
     neg_data = [data[i] for i in range(len(data))if data[i] >=0 and train_data_target[i] == 0]
-    plotHist(pos_data, 'POS-'+col)
-    plotHist(neg_data, 'NEG-'+col)
+    plotHist(pos_data, neg_data, col)
 
 if __name__ == "__main__":
     train_data, train_data_target = format_data()
     for col in list(train_data.columns.values):
         if col not in ['Age', 'Pclass', 'Fare']:
-            print_binary_pos_neg(col)
+            bar_binary_pos_neg(col)
         else:
-            hist_continuous_pos_neg(col)
+            pass
+            # hist_continuous_pos_neg(col)
