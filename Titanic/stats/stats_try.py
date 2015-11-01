@@ -63,11 +63,12 @@ def bar_binary_pos_neg(label):
 def plotHist(pos_data, neg_data, label):
     fig = plt.figure()
     plt.title(label)
-    ax1 = plt.subplot(2, 1, 1)
-    ax2 = plt.subplot(2, 1, 2)
-    ax1.hist(pos_data)
-    ax2.hist(neg_data)
-    plt.show()
+    ax1 = fig.add_subplot(2, 1, 1)
+    ax2 = fig.add_subplot(2, 1, 2)
+    ax1.hist(pos_data, color='b')
+    ax2.hist(neg_data, color='r')
+    plt.tight_layout()
+    fig.show()
 
 def hist_continuous_pos_neg(col):
     data = train_data[col]
@@ -81,5 +82,5 @@ if __name__ == "__main__":
         if col not in ['Age', 'Pclass', 'Fare']:
             bar_binary_pos_neg(col)
         else:
-            pass
-            # hist_continuous_pos_neg(col)
+            # pass
+            hist_continuous_pos_neg(col)
