@@ -12,24 +12,23 @@ local function load_data(file_path)
       data[ins_no - 1] = torch.Tensor(ins)
     end
   end
-  return no_of_ins, total_no_of_pixels, data
+  return data
 end
 
 local function load_train_data()
-  local no_of_ins, total_no_of_pixels, data = load_data('../train.csv')
+  local data = load_data('../train.csv')
+  local no_of_ins, total_no_of_pixels = data:size(1), data:size(2) - 1
   local train_data, train_labels = data[{{}, {2, total_no_of_pixels}}], data[{{}, {1}}]
   local no_of_pixels = math.sqrt(total_no_of_pixels)
   train_data = train_data:resize(no_of_ins, no_of_pixels, no_of_pixels)
-  print(train_data:size(), train_labels:size())
   return train_data, train_labels
 end
 
 local function load_test_data()
-  local no_of_ins, total_no_of_pixels, data = load_data('../test.csv')
-  local test_data = data
+  local test_data = load_data('../test.csv')
+  local no_of_ins, total_no_of_pixels = data:size(1), data:size(2)
   local no_of_pixels = math.sqrt(total_no_of_pixels)
   test_data = test_data:resize(no_of_ins, no_of_pixels, no_of_pixels)
-  print(test_data:size(), train_labels:size())
   return test_data
 end
 
